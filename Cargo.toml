@@ -1,0 +1,19 @@
+[package]
+name = "libcdio-sys"
+version = "0.1.0"
+authors = ["Joaquim Monteiro <joaquim.monteiro@protonmail.com>"]
+description = "Native bindings to the libcdio library"
+repository = "https://github.com/gmes/libcdio-sys"
+readme = "README.md"
+keywords = ["ffi", "cd", "cdio", "iso9660", "udf"]
+categories = ["external-ffi-bindings", "hardware-support", "multimedia", "multimedia::audio"]
+license = "GPL-3.0+"
+
+[build-dependencies]
+bindgen = "0.35"
+
+[features]
+default = ["cdio", "iso9660", "udf"]
+cdio = []
+iso9660 = []
+udf = []
