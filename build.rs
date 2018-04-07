@@ -10,17 +10,17 @@ fn main() {
 
     #[cfg(feature = "cdio")]
     wrapper
-        .write_all(b"#include \"cdio.h\"")
+        .write_all(b"#include \"cdio.h\"\n")
         .expect("Failed to write to file");
 
     #[cfg(feature = "iso9660")]
     wrapper
-        .write_all(b"#include \"iso9660.h\"")
+        .write_all(b"#include \"iso9660.h\"\n")
         .expect("Failed to write to file");
 
     #[cfg(feature = "udf")]
     wrapper
-        .write_all(b"#include \"udf.h\"")
+        .write_all(b"#include \"udf.h\"\n")
         .expect("Failed to write to file");
 
     wrapper.flush().expect("Failed to write to file");
@@ -36,6 +36,8 @@ fn main() {
 
     let bindings = bindgen::Builder::default()
         .header("wrapper.h")
+        // Fix error E0133 (see https://github.com/rust-lang/rust/issues/46043)
+        .derive_debug(false)
         .generate()
         .expect("Unable to generate bindings");
 
