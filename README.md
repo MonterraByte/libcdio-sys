@@ -16,7 +16,7 @@ You need to have libcdio and its headers installed in order to build this crate.
 Add the following to your `Cargo.toml`:
 
     [dependencies]
-    libcdio-sys = "0.1"
+    libcdio-sys = "0.2"
 
 Then, add the following to your crate root:
 
@@ -25,7 +25,7 @@ Then, add the following to your crate root:
 By default, `libcdio-sys` will link to libcdio, libiso9660 and libudf. You can control which libraries are linked using the following:
 
     [dependencies]
-    libcdio-sys = { version = "0.1", default-features = false, features = ["cdio"] }
+    libcdio-sys = { version = "0.2", default-features = false, features = ["cdio"] }
 
 In this example, only libcdio is used. Valid features are: `cdio`, `iso9660` and `udf`.
 
