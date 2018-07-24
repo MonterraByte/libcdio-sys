@@ -1,29 +1,29 @@
 extern crate bindgen;
 
 use std::env;
-use std::fs::File;
-use std::io::Write;
 use std::path::PathBuf;
 
+const CDIO_HEADER: &str = "#include <cdio/cdio.h>
+#include <cdio/cd_types.h>
+#include <cdio/logging.h>
+#include <cdio/mmc_cmds.h>
+#include <cdio/utf8.h>\n";
+
+const ISO9660_HEADER: &str = "#include <cdio/iso9660.h>\n";
+
+const UDF_HEADER: &str = "#include <cdio/udf.h>\n";
+
 fn main() {
-    let mut wrapper: File = File::create("wrapper.h").expect("Failed to create file");
+    let mut header = String::new();
 
     #[cfg(feature = "cdio")]
-    wrapper
-        .write_all(b"#include \"cdio.h\"\n")
-        .expect("Failed to write to file");
+    header.push_str(CDIO_HEADER);
 
     #[cfg(feature = "iso9660")]
-    wrapper
-        .write_all(b"#include \"iso9660.h\"\n")
-        .expect("Failed to write to file");
+    header.push_str(ISO9660_HEADER);
 
     #[cfg(feature = "udf")]
-    wrapper
-        .write_all(b"#include \"udf.h\"\n")
-        .expect("Failed to write to file");
-
-    wrapper.flush().expect("Failed to write to file");
+    header.push_str(UDF_HEADER);
 
     #[cfg(feature = "cdio")]
     println!("cargo:rustc-link-lib=cdio");
@@ -35,7 +35,7 @@ fn main() {
     println!("cargo:rustc-link-lib=udf");
 
     let bindings = bindgen::Builder::default()
-        .header("wrapper.h")
+        .header_contents("wrapper.h", header.as_str())
         // Fix error E0133 (see https://github.com/rust-lang/rust/issues/46043)
         .derive_debug(false)
         .derive_copy(cfg!(not(feature = "docsrs-workaround")))
