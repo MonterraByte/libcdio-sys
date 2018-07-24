@@ -9,15 +9,11 @@ keywords = ["ffi", "cd", "cdio", "iso9660", "udf"]
 categories = ["external-ffi-bindings", "hardware-support", "multimedia", "multimedia::audio"]
 license = "GPL-3.0+"
 
-[package.metadata.docs.rs]
-features = ["docsrs-workaround", "cdio", "iso9660", "udf"]
-
 [build-dependencies]
 bindgen = "0.37"
 
 [features]
 default = ["cdio", "iso9660", "udf"]
-docsrs-workaround = []
 cdio = []
 iso9660 = []
 udf = []
