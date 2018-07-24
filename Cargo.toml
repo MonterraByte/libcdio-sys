@@ -10,7 +10,7 @@ categories = ["external-ffi-bindings", "hardware-support", "multimedia", "multim
 license = "GPL-3.0+"
 
 [build-dependencies]
-bindgen = "0.36"
+bindgen = "0.37"
 
 [features]
 default = ["cdio", "iso9660", "udf"]
