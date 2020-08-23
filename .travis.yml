@@ -1,0 +1,20 @@
+dist: xenial
+language: rust
+rust:
+  - nightly
+cache: cargo
+
+addons:
+  apt:
+    packages:
+      - build-essential
+      - llvm-dev
+      - libclang-dev
+      - clang
+      - libcdio-dev
+      - libudf-dev
+      - libiso9660-dev
+
+script:
+  - cargo build
+  - cargo test
