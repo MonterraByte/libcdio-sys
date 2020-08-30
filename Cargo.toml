@@ -1,6 +1,7 @@
 [package]
 name = "libcdio-sys"
 version = "0.3.0"
+edition = "2018"
 authors = ["Joaquim Monteiro <joaquim.monteiro@protonmail.com>"]
 description = "Native bindings to the libcdio library"
 repository = "https://github.com/gmes78/libcdio-sys"

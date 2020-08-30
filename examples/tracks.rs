@@ -1,8 +1,6 @@
 // Simple program to list track numbers and logical sector numbers of
 // a Compact Disc using libcdio.
 
-extern crate libcdio_sys;
-
 use std::ptr;
 use std::process;
 
