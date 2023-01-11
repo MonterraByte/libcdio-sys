@@ -11,7 +11,7 @@ categories = ["external-ffi-bindings", "hardware-support", "multimedia", "multim
 license = "GPL-3.0+"
 
 [build-dependencies]
-bindgen = "0.55.1"
+bindgen = "0.63"
 
 [features]
 default = ["cdio", "iso9660", "udf"]
