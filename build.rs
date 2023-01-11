@@ -34,8 +34,6 @@ fn main() {
 
     let bindings = bindgen::Builder::default()
         .header_contents("wrapper.h", header.as_str())
-        // Fix error E0133 (see https://github.com/rust-lang/rust/issues/46043)
-        .derive_debug(false)
         .generate()
         .expect("Unable to generate bindings");
 
