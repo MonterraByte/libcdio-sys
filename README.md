@@ -2,6 +2,7 @@
 
 Native bindings to the libcdio library
 
+[![crates.io](https://img.shields.io/crates/v/libcdio-sys.svg)](https://crates.io/crates/libcdio-sys)
 [![Documentation](https://docs.rs/libcdio-sys/badge.svg)](https://docs.rs/libcdio-sys)
 
 [libcdio homepage](https://www.gnu.org/software/libcdio/)  
