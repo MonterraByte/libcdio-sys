@@ -18,10 +18,6 @@ Add the following to your `Cargo.toml`:
     [dependencies]
     libcdio-sys = "0.5"
 
-Then, add the following to your crate root:
-
-    extern crate libcdio_sys;
-
 By default, `libcdio-sys` will link to libcdio, libiso9660 and libudf. You can control which libraries are linked using the following:
 
     [dependencies]
