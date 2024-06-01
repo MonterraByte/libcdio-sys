@@ -10,35 +10,24 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  rustfmt_check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          profile: minimal
-          components: rustfmt
-          override: true
-      - uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all -- --check
-
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install libcdio
         run: |
           sudo apt-get update
           sudo apt-get install -y libcdio-dev libiso9660-dev libudf-dev
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          profile: minimal
-          override: true
-      - uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --workspace --all-targets
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo build --workspace --all-targets
+
+  semver-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install libcdio
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcdio-dev libiso9660-dev libudf-dev
+      - name: Check semver
+        uses: obi1kenobi/cargo-semver-checks-action@v2
