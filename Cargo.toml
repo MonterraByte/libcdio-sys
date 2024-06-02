@@ -1,10 +1,10 @@
 [package]
 name = "libcdio-sys"
-version = "0.5.0"
+version = "0.5.1"
 edition = "2021"
 authors = ["Joaquim Monteiro <joaquim.monteiro@protonmail.com>"]
 description = "Native bindings to the libcdio library"
-repository = "https://github.com/gmes78/libcdio-sys"
+repository = "https://github.com/MonterraByte/libcdio-sys"
 readme = "README.md"
 keywords = ["ffi", "cd", "cdio", "iso9660", "udf"]
 categories = ["external-ffi-bindings", "hardware-support", "multimedia", "multimedia::audio"]
