@@ -12,10 +12,7 @@ const ISO9660_HEADER: &str = "#include <cdio/iso9660.h>\n";
 const UDF_HEADER: &str = "#include <cdio/udf.h>\n";
 
 fn main() {
-    let mut header = String::new();
-
-    #[cfg(feature = "cdio")]
-    header.push_str(CDIO_HEADER);
+    let mut header = String::from(CDIO_HEADER);
 
     #[cfg(feature = "iso9660")]
     header.push_str(ISO9660_HEADER);
@@ -23,7 +20,6 @@ fn main() {
     #[cfg(feature = "udf")]
     header.push_str(UDF_HEADER);
 
-    #[cfg(feature = "cdio")]
     println!("cargo:rustc-link-lib=cdio");
 
     #[cfg(feature = "iso9660")]

@@ -14,7 +14,6 @@ license = "GPL-3.0+"
 bindgen = "0.72"
 
 [features]
-default = ["cdio", "iso9660", "udf"]
-cdio = []
+default = ["iso9660", "udf"]
 iso9660 = []
 udf = []

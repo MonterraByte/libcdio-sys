@@ -14,17 +14,11 @@ You need to have libcdio and its headers installed in order to build this crate.
 
 # Usage
 
-Add the following to your `Cargo.toml`:
+Run `cargo add libcdio-sys`, or add `libcdio-sys = "0.5"` to the `[dependencies]` section of your Cargo.toml.
 
-    [dependencies]
-    libcdio-sys = "0.5"
+libcdio is split into multiple libraries: `libcdio`, `libiso9660` and `libudf`. The `libcdio-sys` crate always links against `libcdio`, and can link against the others depending on which Cargo features are enabled.
 
-By default, `libcdio-sys` will link to libcdio, libiso9660 and libudf. You can control which libraries are linked using the following:
-
-    [dependencies]
-    libcdio-sys = { version = "0.5", default-features = false, features = ["cdio"] }
-
-In this example, only libcdio is used. Valid features are: `cdio`, `iso9660` and `udf`.
+The available Cargo features are `iso9660` and `udf`, and both are enabled by default.
 
 # License
 
