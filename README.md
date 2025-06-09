@@ -1,6 +1,6 @@
 # libcdio-sys
 
-Native bindings to the libcdio library
+Native bindings to the libcdio and libcdio-paranoia libraries
 
 [![crates.io](https://img.shields.io/crates/v/libcdio-sys.svg)](https://crates.io/crates/libcdio-sys)
 [![Documentation](https://docs.rs/libcdio-sys/badge.svg)](https://docs.rs/libcdio-sys)
@@ -16,9 +16,9 @@ You need to have libcdio and its headers installed in order to build this crate.
 
 Run `cargo add libcdio-sys`, or add `libcdio-sys = "0.5"` to the `[dependencies]` section of your Cargo.toml.
 
-libcdio is split into multiple libraries: `libcdio`, `libiso9660` and `libudf`. The `libcdio-sys` crate always links against `libcdio`, and can link against the others depending on which Cargo features are enabled.
+libcdio is split into multiple libraries: `libcdio`, `libiso9660` and `libudf`. (Likewise, libcdio-paranoia is split into `libcdio_cdda` and `libcdio_paranoia`.) The `libcdio-sys` crate always links against `libcdio`, and can link against the others depending on which Cargo features are enabled.
 
-The available Cargo features are `iso9660` and `udf`, and both are enabled by default.
+The available Cargo features are `iso9660`, `udf`, `cdda` and `paranoia`. The first two are enabled by default; the last two require libcdio-paranoia, which is usually installed separately from libcdio.
 
 # License
 

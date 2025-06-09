@@ -17,9 +17,9 @@ jobs:
       - name: Install libcdio
         run: |
           sudo apt-get update
-          sudo apt-get install -y libcdio-dev libiso9660-dev libudf-dev
+          sudo apt-get install -y libcdio-dev libiso9660-dev libudf-dev libcdio-cdda-dev libcdio-paranoia-dev
       - uses: dtolnay/rust-toolchain@stable
-      - run: cargo build --workspace --all-targets
+      - run: cargo build --workspace --all-targets --all-features
 
   semver-check:
     runs-on: ubuntu-latest
@@ -28,6 +28,6 @@ jobs:
       - name: Install libcdio
         run: |
           sudo apt-get update
-          sudo apt-get install -y libcdio-dev libiso9660-dev libudf-dev
+          sudo apt-get install -y libcdio-dev libiso9660-dev libudf-dev libcdio-cdda-dev libcdio-paranoia-dev
       - name: Check semver
         uses: obi1kenobi/cargo-semver-checks-action@v2

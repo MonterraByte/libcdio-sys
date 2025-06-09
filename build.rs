@@ -14,12 +14,22 @@ const ISO9660_HEADER: &str = "#include <cdio/iso9660.h>\n";
 #[cfg(feature = "udf")]
 const UDF_HEADER: &str = "#include <cdio/udf.h>\n";
 
+#[cfg(feature = "cdda")]
+const CDDA_HEADER: &str = "#include <cdio/paranoia/cdda.h>\n";
+
+#[cfg(feature = "paranoia")]
+const PARANOIA_HEADER: &str = "#include <cdio/paranoia/paranoia.h>\n";
+
 const HEADERS: &[&str] = &[
     CDIO_HEADER,
     #[cfg(feature = "iso9660")]
     ISO9660_HEADER,
     #[cfg(feature = "udf")]
     UDF_HEADER,
+    #[cfg(feature = "cdda")]
+    CDDA_HEADER,
+    #[cfg(feature = "paranoia")]
+    PARANOIA_HEADER,
 ];
 
 const LINK_LIBS: &[&str] = &[
@@ -28,6 +38,10 @@ const LINK_LIBS: &[&str] = &[
     "iso9660",
     #[cfg(feature = "udf")]
     "udf",
+    #[cfg(feature = "cdda")]
+    "cdio_cdda",
+    #[cfg(feature = "paranoia")]
+    "cdio_paranoia",
 ];
 
 fn main() {
@@ -43,6 +57,7 @@ fn main() {
     let bindings = bindgen::Builder::default()
         .header_contents("wrapper.h", &headers)
         .allowlist_file(r".*[/\\]cdio[/\\][^/\\]*\.h")
+        .allowlist_file(r".*[/\\]cdio[/\\]paranoia[/\\][^/\\]*\.h")
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
         .generate()
         .expect("Unable to generate bindings");
