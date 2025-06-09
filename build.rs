@@ -30,6 +30,7 @@ fn main() {
 
     let bindings = bindgen::Builder::default()
         .header_contents("wrapper.h", header.as_str())
+        .allowlist_file(r".*[/\\]cdio[/\\][^/\\]*\.h")
         .generate()
         .expect("Unable to generate bindings");
 
