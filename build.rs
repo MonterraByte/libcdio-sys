@@ -1,4 +1,5 @@
 use std::env;
+use std::io::{self, Write};
 use std::path::PathBuf;
 
 const CDIO_HEADER: &str = "#include <cdio/cdio.h>
@@ -11,6 +12,14 @@ const ISO9660_HEADER: &str = "#include <cdio/iso9660.h>\n";
 
 const UDF_HEADER: &str = "#include <cdio/udf.h>\n";
 
+const LINK_LIBS: &[&str] = &[
+    "cdio",
+    #[cfg(feature = "iso9660")]
+    "iso9660",
+    #[cfg(feature = "udf")]
+    "udf",
+];
+
 fn main() {
     let mut header = String::from(CDIO_HEADER);
 
@@ -20,13 +29,13 @@ fn main() {
     #[cfg(feature = "udf")]
     header.push_str(UDF_HEADER);
 
-    println!("cargo:rustc-link-lib=cdio");
-
-    #[cfg(feature = "iso9660")]
-    println!("cargo:rustc-link-lib=iso9660");
-
-    #[cfg(feature = "udf")]
-    println!("cargo:rustc-link-lib=udf");
+    let mut stdout = io::stdout().lock();
+    for lib in LINK_LIBS {
+        for s in [b"cargo:rustc-link-lib=", lib.as_bytes(), b"\n"] {
+            stdout.write_all(s).unwrap();
+        }
+    }
+    drop(stdout);
 
     let bindings = bindgen::Builder::default()
         .header_contents("wrapper.h", header.as_str())
