@@ -6,6 +6,7 @@ authors = ["Joaquim Monteiro <joaquim.monteiro@protonmail.com>"]
 description = "Native bindings to the libcdio library"
 repository = "https://github.com/MonterraByte/libcdio-sys"
 readme = "README.md"
+exclude = ["/.github"]
 keywords = ["ffi", "cd", "cdio", "iso9660", "udf"]
 categories = ["external-ffi-bindings", "hardware-support", "multimedia", "multimedia::audio"]
 license = "GPL-3.0+"
