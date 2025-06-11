@@ -1,7 +1,7 @@
 [package]
 name = "libcdio-sys"
 version = "0.5.2"
-edition = "2021"
+edition = "2024"
 authors = ["Joaquim Monteiro <joaquim.monteiro@protonmail.com>"]
 description = "Native bindings to the libcdio (and libcdio-paranoia) library"
 repository = "https://github.com/MonterraByte/libcdio-sys"

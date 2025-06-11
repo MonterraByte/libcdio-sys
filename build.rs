@@ -58,6 +58,7 @@ fn main() {
         .header_contents("wrapper.h", &headers)
         .allowlist_file(r".*[/\\]cdio[/\\][^/\\]*\.h")
         .allowlist_file(r".*[/\\]cdio[/\\]paranoia[/\\][^/\\]*\.h")
+        .wrap_unsafe_ops(true)
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
         .generate()
         .expect("Unable to generate bindings");
