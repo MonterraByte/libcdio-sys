@@ -8,9 +8,19 @@ const CDIO_HEADER: &str = "#include <cdio/cdio.h>
 #include <cdio/mmc_cmds.h>
 #include <cdio/utf8.h>\n";
 
+#[cfg(feature = "iso9660")]
 const ISO9660_HEADER: &str = "#include <cdio/iso9660.h>\n";
 
+#[cfg(feature = "udf")]
 const UDF_HEADER: &str = "#include <cdio/udf.h>\n";
+
+const HEADERS: &[&str] = &[
+    CDIO_HEADER,
+    #[cfg(feature = "iso9660")]
+    ISO9660_HEADER,
+    #[cfg(feature = "udf")]
+    UDF_HEADER,
+];
 
 const LINK_LIBS: &[&str] = &[
     "cdio",
@@ -21,14 +31,6 @@ const LINK_LIBS: &[&str] = &[
 ];
 
 fn main() {
-    let mut header = String::from(CDIO_HEADER);
-
-    #[cfg(feature = "iso9660")]
-    header.push_str(ISO9660_HEADER);
-
-    #[cfg(feature = "udf")]
-    header.push_str(UDF_HEADER);
-
     let mut stdout = io::stdout().lock();
     for lib in LINK_LIBS {
         for s in [b"cargo:rustc-link-lib=", lib.as_bytes(), b"\n"] {
@@ -37,8 +39,9 @@ fn main() {
     }
     drop(stdout);
 
+    let headers = HEADERS.join("");
     let bindings = bindgen::Builder::default()
-        .header_contents("wrapper.h", header.as_str())
+        .header_contents("wrapper.h", &headers)
         .allowlist_file(r".*[/\\]cdio[/\\][^/\\]*\.h")
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
         .generate()
