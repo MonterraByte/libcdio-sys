@@ -8,9 +8,37 @@ Native bindings to the libcdio and libcdio-paranoia libraries
 [libcdio homepage](https://www.gnu.org/software/libcdio/)  
 [libcdio documentation](https://www.gnu.org/software/libcdio/libcdio.html)
 
-# Prerequisites
+# Building
+
+## Prerequisites
 
 You need to have libcdio and its headers installed in order to build this crate.
+
+pkg-config is also required to build this crate normally, though this requirement can be avoided by setting the following environment variables:
+
+| Feature    | Environment variables                                                                         |
+| ---------- | --------------------------------------------------------------------------------------------- |
+| none       | `SYSTEM_DEPS_LIBCDIO_NO_PKG_CONFIG=1 SYSTEM_DEPS_LIBCDIO_LIB=cdio`                            |
+| `iso9660`  | `SYSTEM_DEPS_LIBISO9660_NO_PKG_CONFIG=1 SYSTEM_DEPS_LIBISO9660_LIB=iso9660`                   |
+| `udf`      | `SYSTEM_DEPS_LIBUDF_NO_PKG_CONFIG=1 SYSTEM_DEPS_LIBUDF_LIB=udf`                               |
+| `cdda`     | `SYSTEM_DEPS_LIBCDIO_CDDA_NO_PKG_CONFIG=1 SYSTEM_DEPS_LIBCDIO_CDDA_LIB=cdio_cdda`             |
+| `paranoia` | `SYSTEM_DEPS_LIBCDIO_PARANOIA_NO_PKG_CONFIG=1 SYSTEM_DEPS_LIBCDIO_PARANOIA_LIB=cdio_paranoia` |
+
+## Overriding the libcdio library
+
+To control the libcdio library used when building this crate, set the `PKG_CONFIG_PATH` environment variable to the path of the directory containing pkg-config files for the correct library.
+Alternatively, set the the following environment variables, depending on which features you have enabled:
+
+| Feature    | Library path                                 | Include path                           |
+| ---------- | -------------------------------------------- | -------------------------------------- |
+| none       | `SYSTEM_DEPS_LIBCDIO_SEARCH_NATIVE`          | `SYSTEM_DEPS_LIBCDIO_INCLUDE`          |
+| `iso9660`  | `SYSTEM_DEPS_LIBISO9660_SEARCH_NATIVE`       | `SYSTEM_DEPS_LIBISO9660_INCLUDE`       |
+| `udf`      | `SYSTEM_DEPS_LIBUDF_SEARCH_NATIVE`           | `SYSTEM_DEPS_LIBUDF_INCLUDE`           |
+| `cdda`     | `SYSTEM_DEPS_LIBCDIO_CDDA_SEARCH_NATIVE`     | `SYSTEM_DEPS_LIBCDIO_CDDA_INCLUDE`     |
+| `paranoia` | `SYSTEM_DEPS_LIBCDIO_PARANOIA_SEARCH_NATIVE` | `SYSTEM_DEPS_LIBCDIO_PARANOIA_INCLUDE` |
+
+Variables in the "Library path" column should be set to the path of the directory containing the library, and variables in the "Include path" column should be set to the path of the directory containing the `cdio` header directory.
+See the [system-deps documentation](https://docs.rs/system-deps/7/system_deps/) for more information.
 
 # Usage
 
