@@ -13,6 +13,7 @@ license = "GPL-3.0+"
 
 [build-dependencies]
 bindgen = "0.72"
+system-deps = "7"
 
 [features]
 default = ["iso9660", "udf"]
@@ -20,6 +21,13 @@ iso9660 = []
 udf = []
 cdda = []
 paranoia = ["cdda"]
+
+[package.metadata.system-deps]
+libcdio = "0"
+libiso9660 = { version = "0", feature = "iso9660" }
+libudf = { version = "0", feature = "udf" }
+libcdio_cdda = { version = "0", feature = "cdda" }
+libcdio_paranoia = { version = "0", feature = "paranoia" }
 
 [package.metadata.docs.rs]
 all-features = true
