@@ -2,7 +2,12 @@ use std::env;
 use std::io::{self, Write};
 use std::path::PathBuf;
 
-const CDIO_HEADER: &str = "#include <cdio/cdio.h>
+// libcdio uses a homegrown boolean type for versions < 2.1.1.
+// The homegrown boolean type is not recognized by bindgen.
+// This would result in different code gen for versions < 2.1.1 and versions >= 2.1.1.
+// To prevent this, we include stdbool.h ourselves, which suppresses the homegrown boolean type.
+const CDIO_HEADER: &str = "#include <stdbool.h>
+#include <cdio/cdio.h>
 #include <cdio/cd_types.h>
 #include <cdio/logging.h>
 #include <cdio/mmc_cmds.h>
