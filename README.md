@@ -8,9 +8,17 @@ Native bindings to the libcdio and libcdio-paranoia libraries
 [libcdio homepage](https://www.gnu.org/software/libcdio/)  
 [libcdio documentation](https://www.gnu.org/software/libcdio/libcdio.html)
 
-# Prerequisites
+# Building
+
+## Prerequisites
 
 You need to have libcdio and its headers installed in order to build this crate.
+
+## Overriding the libcdio library
+
+The bindings use [system-deps](https://docs.rs/system-deps) to find libcdio. You may override the `PKG_CONFIG_PATH` or
+direcly set the env vars `SYSTEM_DEPS_LIBCDIO_SEARCH_NATIVE` and/or `SYSTEM_DEPS_LIBCDIO_LIB`
+(analogous environment variables are available for the other libraries).
 
 # Usage
 
