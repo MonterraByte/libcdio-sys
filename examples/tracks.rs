@@ -5,12 +5,12 @@ use std::process;
 use std::ptr;
 
 use libcdio_sys::{
-    cdio_destroy, cdio_get_disc_last_lsn, cdio_get_first_track_num, cdio_get_num_tracks,
-    cdio_get_track_lsn, cdio_open,
+    CDIO_INVALID_LSN, CdIo_t, cdio_track_enums_CDIO_CDROM_LEADOUT_TRACK,
+    driver_id_t_DRIVER_UNKNOWN, lsn_t, track_t,
 };
 use libcdio_sys::{
-    cdio_track_enums_CDIO_CDROM_LEADOUT_TRACK, driver_id_t_DRIVER_UNKNOWN, lsn_t, track_t, CdIo_t,
-    CDIO_INVALID_LSN,
+    cdio_destroy, cdio_get_disc_last_lsn, cdio_get_first_track_num, cdio_get_num_tracks,
+    cdio_get_track_lsn, cdio_open,
 };
 
 fn main() {
