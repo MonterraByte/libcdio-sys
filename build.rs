@@ -1,5 +1,4 @@
 use std::env;
-use std::io::{self, Write};
 use std::path::PathBuf;
 
 // libcdio uses a homegrown boolean type for versions < 2.1.1.
@@ -37,26 +36,11 @@ const HEADERS: &[&str] = &[
     PARANOIA_HEADER,
 ];
 
-const LINK_LIBS: &[&str] = &[
-    "cdio",
-    #[cfg(feature = "iso9660")]
-    "iso9660",
-    #[cfg(feature = "udf")]
-    "udf",
-    #[cfg(feature = "cdda")]
-    "cdio_cdda",
-    #[cfg(feature = "paranoia")]
-    "cdio_paranoia",
-];
-
 fn main() {
-    let mut stdout = io::stdout().lock();
-    for lib in LINK_LIBS {
-        for s in [b"cargo:rustc-link-lib=", lib.as_bytes(), b"\n"] {
-            stdout.write_all(s).unwrap();
-        }
+    if let Err(s) = system_deps::Config::new().probe() {
+        println!("cargo:warning={s}");
+        std::process::exit(1);
     }
-    drop(stdout);
 
     let headers = HEADERS.join("");
     let bindings = bindgen::Builder::default()
