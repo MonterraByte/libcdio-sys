@@ -8,7 +8,13 @@ Native bindings to the libcdio and libcdio-paranoia libraries
 [libcdio homepage](https://www.gnu.org/software/libcdio/)  
 [libcdio documentation](https://www.gnu.org/software/libcdio/libcdio.html)
 
-# Building
+# Usage
+
+Run `cargo add libcdio-sys`, or add `libcdio-sys = "1"` to the `[dependencies]` section of your Cargo.toml.
+
+libcdio is split into multiple libraries: `libcdio`, `libiso9660` and `libudf`. (Likewise, libcdio-paranoia is split into `libcdio_cdda` and `libcdio_paranoia`.) The `libcdio-sys` crate always links against `libcdio`, and can link against the others depending on which Cargo features are enabled.
+
+The available Cargo features are `iso9660`, `udf`, `cdda` and `paranoia`. The first two are enabled by default; the last two require libcdio-paranoia, which is usually installed separately from libcdio.
 
 ## Prerequisites
 
@@ -39,14 +45,6 @@ Alternatively, set the the following environment variables, depending on which f
 
 Variables in the "Library path" column should be set to the path of the directory containing the library, and variables in the "Include path" column should be set to the path of the directory containing the `cdio` header directory.
 See the [system-deps documentation](https://docs.rs/system-deps/7/system_deps/) for more information.
-
-# Usage
-
-Run `cargo add libcdio-sys`, or add `libcdio-sys = "1"` to the `[dependencies]` section of your Cargo.toml.
-
-libcdio is split into multiple libraries: `libcdio`, `libiso9660` and `libudf`. (Likewise, libcdio-paranoia is split into `libcdio_cdda` and `libcdio_paranoia`.) The `libcdio-sys` crate always links against `libcdio`, and can link against the others depending on which Cargo features are enabled.
-
-The available Cargo features are `iso9660`, `udf`, `cdda` and `paranoia`. The first two are enabled by default; the last two require libcdio-paranoia, which is usually installed separately from libcdio.
 
 # License
 
