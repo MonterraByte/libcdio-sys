@@ -10,7 +10,7 @@ Native bindings to the libcdio and libcdio-paranoia libraries
 
 # Usage
 
-Run `cargo add libcdio-sys`, or add `libcdio-sys = "1"` to the `[dependencies]` section of your Cargo.toml.
+Run `cargo add libcdio-sys`, or add `libcdio-sys = "2"` to the `[dependencies]` section of your Cargo.toml.
 
 libcdio is split into multiple libraries: `libcdio`, `libiso9660` and `libudf`. (Likewise, libcdio-paranoia is split into `libcdio_cdda` and `libcdio_paranoia`.) The `libcdio-sys` crate always links against `libcdio`, and can link against the others depending on which Cargo features are enabled.
 
