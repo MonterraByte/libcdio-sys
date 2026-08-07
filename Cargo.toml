@@ -6,7 +6,13 @@ authors = ["Joaquim Monteiro <joaquim.monteiro@protonmail.com>"]
 description = "Native bindings to the libcdio (and libcdio-paranoia) library"
 repository = "https://github.com/MonterraByte/libcdio-sys"
 readme = "README.md"
-exclude = ["/.github"]
+exclude = [
+  "/.github",
+  "vendor/libcdio/*",
+  "!vendor/libcdio/COPYING",
+  "!vendor/libcdio/include/**/*.h",
+  "!vendor/libcdio/lib/**/*.[ch]",
+]
 keywords = ["ffi", "cd", "cdio", "iso9660", "udf"]
 categories = ["external-ffi-bindings", "hardware-support", "multimedia", "multimedia::audio"]
 license = "GPL-3.0+"
@@ -14,6 +20,7 @@ links = "cdio"
 
 [build-dependencies]
 bindgen = "0.72"
+cc = { version = "1.4.0" }
 system-deps = "7"
 
 [features]
@@ -22,7 +29,9 @@ iso9660 = []
 udf = []
 cdda = []
 paranoia = ["cdda"]
+vendored = []
 
+# Do not forget vendor/*version.h
 [package.metadata.system-deps]
 libcdio = ">= 2.4.0, < 3.0.0"
 libiso9660 = { version = ">= 2.4.0, < 3.0.0", feature = "iso9660" }
