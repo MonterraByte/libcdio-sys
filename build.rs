@@ -1,15 +1,24 @@
 use std::env;
 use std::error::Error;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 fn main() -> Result<(), Box<dyn Error>> {
     system_deps::Config::new().probe()?;
-    make_bindings()?;
+    make_bindings(std::iter::empty::<&Path>())?;
 
     Ok(())
 }
 
-fn make_bindings() -> Result<(), Box<dyn Error>> {
+/// Create bindings at OUT_DIR/bindings.rs.
+/// Additional include paths can be passed as input.
+fn make_bindings(
+    includes: impl IntoIterator<Item = impl AsRef<Path>>,
+) -> Result<(), Box<dyn Error>> {
+    let mut builder = bindgen::Builder::default();
+    for include in includes {
+        builder = builder.clang_arg(format!("-I{}", include.as_ref().display()));
+    }
+
     // libcdio uses a homegrown boolean type for versions < 2.1.1.
     // The homegrown boolean type is not recognized by bindgen.
     // This would result in different code gen for versions < 2.1.1 and versions >= 2.1.1.
@@ -34,7 +43,7 @@ fn make_bindings() -> Result<(), Box<dyn Error>> {
         "#include <cdio/paranoia/paranoia.h>",
     ];
     let headers = HEADERS.join("\n");
-    let bindings = bindgen::Builder::default()
+    let bindings = builder
         .header_contents("wrapper.h", &headers)
         .allowlist_file(r".*[/\\]cdio[/\\][^/\\]*\.h")
         .allowlist_file(r".*[/\\]cdio[/\\]paranoia[/\\][^/\\]*\.h")
