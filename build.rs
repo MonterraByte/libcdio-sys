@@ -1,4 +1,5 @@
 use std::env;
+use std::error::Error;
 use std::path::PathBuf;
 
 // libcdio uses a homegrown boolean type for versions < 2.1.1.
@@ -36,11 +37,8 @@ const HEADERS: &[&str] = &[
     PARANOIA_HEADER,
 ];
 
-fn main() {
-    if let Err(s) = system_deps::Config::new().probe() {
-        println!("cargo:warning={s}");
-        std::process::exit(1);
-    }
+fn main() -> Result<(), Box<dyn Error>> {
+    system_deps::Config::new().probe()?;
 
     let headers = HEADERS.join("");
     let bindings = bindgen::Builder::default()
@@ -49,12 +47,12 @@ fn main() {
         .allowlist_file(r".*[/\\]cdio[/\\]paranoia[/\\][^/\\]*\.h")
         .wrap_unsafe_ops(true)
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
-        .generate()
-        .expect("Unable to generate bindings");
+        .generate()?;
 
-    let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
+    let out_path =
+        PathBuf::from(env::var("OUT_DIR").expect("OUT_DIR should have been set by Cargo"));
 
-    bindings
-        .write_to_file(out_path.join("bindings.rs"))
-        .expect("Couldn't write bindings!");
+    bindings.write_to_file(out_path.join("bindings.rs"))?;
+
+    Ok(())
 }
