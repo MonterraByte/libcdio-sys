@@ -1,5 +1,4 @@
 # libcdio-sys
-
 Native bindings to the libcdio and libcdio-paranoia libraries
 
 [![crates.io](https://img.shields.io/crates/v/libcdio-sys.svg)](https://crates.io/crates/libcdio-sys)
@@ -9,18 +8,40 @@ Native bindings to the libcdio and libcdio-paranoia libraries
 [libcdio documentation](https://www.gnu.org/software/libcdio/libcdio.html)
 
 # Usage
+Run `cargo add libcdio-sys` to add the crate.
 
-Run `cargo add libcdio-sys`, or add `libcdio-sys = "2"` to the `[dependencies]` section of your Cargo.toml.
+libcdio is split into multiple libraries: `libcdio`, `libiso9660` and
+`libudf`. Likewise, libcdio-paranoia is split into `libcdio_cdda` and
+`libcdio_paranoia`.
 
-libcdio is split into multiple libraries: `libcdio`, `libiso9660` and `libudf`. (Likewise, libcdio-paranoia is split into `libcdio_cdda` and `libcdio_paranoia`.) The `libcdio-sys` crate always links against `libcdio`, and can link against the others depending on which Cargo features are enabled.
+Cargo features are provided to control which libraries are included.
 
-The available Cargo features are `iso9660`, `udf`, `cdda` and `paranoia`. The first two are enabled by default; the last two require libcdio-paranoia, which is usually installed separately from libcdio.
+## Versioning
+The crate's version reflects three things:
+For example: `v3.0.0+2.4.0p2.0.2`.
+- `v3.0.0`: Crate version
+- `+2.4.0`: libcdio's version
+- `p2.0.2`: libcdio-paranoia's version (`10.2+2.0.2` in this case)
+Everything beyond the `+` is ignored by Cargo during resolution.
 
-## Prerequisites
+## Vendoring
+Enable the `vendored` feature to always perform vendored builds.
 
-You need to have libcdio and its headers installed in order to build this crate.
+If disabled, the crate will attempt to use the libraries from the
+system before falling back to vendoring if that fails.
+To force a non-vendored build, set the `LIBCDIO_NO_VENDOR` environment
+variable.
 
-pkg-config is also required to build this crate normally, though this requirement can be avoided by setting the following environment variables:
+Non-vendored builds use the version metadata as a lower bound
+when probing the system, allowing any newer non-major version.
+Thus, a non-vendored build for `v3.0.0+2.4.0p2.0.2` would probe the
+system for libcdio `>= 2.4.0, < 3.0.0` and (if features are enabled)
+libcdio-paranoia `>= 10.2+2.0.2, < 10.2+3.0.0`.
+
+You need to have libcdio and its headers installed for non-vendored builds.
+
+pkg-config is also required for this, though this requirement can be
+avoided by setting the following environment variables:
 
 | Feature    | Environment variables                                                                         |
 | ---------- | --------------------------------------------------------------------------------------------- |
@@ -30,10 +51,12 @@ pkg-config is also required to build this crate normally, though this requiremen
 | `cdda`     | `SYSTEM_DEPS_LIBCDIO_CDDA_NO_PKG_CONFIG=1 SYSTEM_DEPS_LIBCDIO_CDDA_LIB=cdio_cdda`             |
 | `paranoia` | `SYSTEM_DEPS_LIBCDIO_PARANOIA_NO_PKG_CONFIG=1 SYSTEM_DEPS_LIBCDIO_PARANOIA_LIB=cdio_paranoia` |
 
-## Overriding the libcdio library
-
-To control the libcdio library used when building this crate, set the `PKG_CONFIG_PATH` environment variable to the path of the directory containing pkg-config files for the correct library.
-Alternatively, set the the following environment variables, depending on which features you have enabled:
+### Overriding the system library
+To control the shared library used in a non-vendored build, set the
+`PKG_CONFIG_PATH` environment variable to the path of the directory
+containing pkg-config files for the correct library.
+Alternatively, set the the following environment variables, depending
+on which features you have enabled:
 
 | Feature    | Library path                                 | Include path                           |
 | ---------- | -------------------------------------------- | -------------------------------------- |
@@ -47,7 +70,6 @@ Variables in the "Library path" column should be set to the path of the director
 See the [system-deps documentation](https://docs.rs/system-deps/7/system_deps/) for more information.
 
 # License
-
 Copyright © 2018, 2019, 2020, 2023, 2025 Joaquim Monteiro
 
 This program is free software: you can redistribute it and/or modify
