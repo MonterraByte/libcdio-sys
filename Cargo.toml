@@ -24,11 +24,11 @@ cdda = []
 paranoia = ["cdda"]
 
 [package.metadata.system-deps]
-libcdio = "0"
-libiso9660 = { version = "0", feature = "iso9660" }
-libudf = { version = "0", feature = "udf" }
-libcdio_cdda = { version = "0", feature = "cdda" }
-libcdio_paranoia = { version = "0", feature = "paranoia" }
+libcdio = ">= 2.4.0, < 3.0.0"
+libiso9660 = { version = ">= 2.4.0, < 3.0.0", feature = "iso9660" }
+libudf = { version = ">= 2.4.0, < 3.0.0", feature = "udf" }
+libcdio_cdda = { version = ">= 10.2+2.0.2, < 10.2+3.0.0", feature = "cdda" }
+libcdio_paranoia = { version = ">= 10.2+2.0.2, < 10.2+3.0.0", feature = "paranoia" }
 
 [package.metadata.docs.rs]
 all-features = true
