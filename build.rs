@@ -51,8 +51,15 @@ fn make_static() -> Result<Vec<PathBuf>, cc::Error> {
     includes.push(include.clone());
     cp(vendor.join("config.h"), include.join("config.h"))?;
     cp(vendor.join("version.h"), include.join("cdio/version.h"))?;
-
     let target = env::var("TARGET").expect("TARGET should have been set by Cargo");
+    if target.contains("msvc") {
+        // libcdio uses a custom unistd.h for its MSVC builds
+        cp(
+            vendor.join("libcdio/.vs/unistd.h"),
+            include.join("unistd.h"),
+        )?;
+    }
+
     if target.contains("windows") {
         println!("cargo::rustc-link-lib=winmm");
     }

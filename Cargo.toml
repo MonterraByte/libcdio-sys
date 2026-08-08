@@ -9,6 +9,7 @@ readme = "README.md"
 exclude = [
   "/.github",
   "vendor/libcdio/*",
+  "!vendor/libcdio/.vs/unistd.h",
   "!vendor/libcdio/COPYING",
   "!vendor/libcdio/include/**/*.h",
   "!vendor/libcdio/lib/**/*.[ch]",

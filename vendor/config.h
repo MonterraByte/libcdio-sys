@@ -29,6 +29,7 @@
 #define ICONV_CONST
 #define HAVE_JOLIET
 #define HAVE_ROCK
+#define HAVE_UNISTD_H /* A custom unistd.h is used for MSVC */
 
 /* Platform specific */
 #if defined(_WIN32)
@@ -48,7 +49,6 @@
     #define HAVE_STRTOK_R
     #define HAVE_TM_GMTOFF
     #define HAVE_TIMEGM
-    #define HAVE_UNISTD_H
     #define HAVE_UNSETENV
 #endif
 #if defined(__APPLE__)
