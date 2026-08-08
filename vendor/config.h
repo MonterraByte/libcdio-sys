@@ -1,4 +1,4 @@
-/* config.h for libcdio */
+/* config.h for libcdio and libcdio-paranoia */
 
 #pragma once
 
@@ -39,6 +39,9 @@
     #define HAVE_WINDOWS_H
 #endif
 #if defined(__APPLE__) || (__FreeBSD__) || (__linux__)
+    #define HAVE_CLOCK_GETTIME
+    #define HAVE_SYS_TIME_H
+
     #define HAVE_DLFCN_H
     #define HAVE_GLOB_H
     #define HAVE_GMTIME_R

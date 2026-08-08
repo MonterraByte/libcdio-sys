@@ -35,7 +35,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 }
 
 /// Build a static library and return the (public) include paths
-fn make_static() -> Result<Vec<PathBuf>, cc::Error> {
+fn make_static() -> Result<Vec<PathBuf>, Box<dyn Error>> {
     let mut includes = Vec::new();
     let mut build = cc::Build::new();
     build.warnings(false);
@@ -84,6 +84,27 @@ fn make_static() -> Result<Vec<PathBuf>, cc::Error> {
         let src = vendor.join("libcdio/lib/udf/");
         build.include(&src);
         build.files(UDF_SOURCES.iter().map(|s| src.join(s)));
+    }
+
+    if cfg!(feature = "cdda") || cfg!(feature = "paranoia") {
+        if target.contains("msvc") {
+            return Err("This version of libcdio-paranoia does not support MSVC builds".into());
+        }
+        includes.push(vendor.join("libcdio-paranoia/include/"));
+        cp(
+            vendor.join("paranoia_version.h"),
+            include.join("cdio/paranoia/version.h"),
+        )?;
+    }
+    if cfg!(feature = "cdda") {
+        let src = vendor.join("libcdio-paranoia/lib/cdda_interface/");
+        build.include(&src);
+        build.files(CDDA_SOURCES.iter().map(|s| src.join(s)));
+    }
+    if cfg!(feature = "paranoia") {
+        let src = vendor.join("libcdio-paranoia/lib/paranoia/");
+        build.include(&src);
+        build.files(PARANOIA_SOURCES.iter().map(|s| src.join(s)));
     }
 
     build.includes(&includes);
@@ -203,3 +224,14 @@ const UDF_SOURCES: &[&str] = &[
     "udf_fs.c",
     "udf_time.c",
 ];
+const CDDA_SOURCES: &[&str] = &[
+    "cddap_interface.c",
+    "common_interface.c",
+    "drive_exceptions.c",
+    "interface.c",
+    "scan_devices.c",
+    "smallft.c",
+    "toc.c",
+    "utils.c",
+];
+const PARANOIA_SOURCES: &[&str] = &["gap.c", "isort.c", "overlap.c", "p_block.c", "paranoia.c"];

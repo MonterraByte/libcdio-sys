@@ -1,3 +1,6 @@
 [submodule "vendor/libcdio"]
 	path = vendor/libcdio
 	url = https://github.com/libcdio/libcdio.git
+[submodule "vendor/libcdio-paranoia"]
+	path = vendor/libcdio-paranoia
+	url = https://github.com/libcdio/libcdio-paranoia.git
