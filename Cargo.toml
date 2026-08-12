@@ -10,6 +10,7 @@ exclude = ["/.github"]
 keywords = ["ffi", "cd", "cdio", "iso9660", "udf"]
 categories = ["external-ffi-bindings", "hardware-support", "multimedia", "multimedia::audio"]
 license = "GPL-3.0+"
+links = "cdio"
 
 [build-dependencies]
 bindgen = "0.72"
