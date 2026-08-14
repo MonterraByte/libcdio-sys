@@ -10,24 +10,54 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  vendored-build:
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+      - name: Build the crate (Unix)
+        if: matrix.os == 'macos-latest' || matrix.os == 'ubuntu-latest'
+        run: cargo build --all-features
+      - name: Build the crate (MSVC)
+        if: matrix.os == 'windows-latest'
+        # libcdio-paranoia does not support MSVC
+        run: cargo build --features iso9660,udf,vendored
+
+  non-vendored-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Install libcdio
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+      - name: Install build dependencies
+        run: sudo apt install help2man
+      - name: Build and install libcdio from source
+        env:
+          CFLAGS: -O0
         run: |
-          sudo apt-get update
-          sudo apt-get install -y libcdio-dev libiso9660-dev libudf-dev libcdio-cdda-dev libcdio-paranoia-dev
-      - uses: dtolnay/rust-toolchain@stable
-      - run: cargo build --workspace --all-targets --all-features
+          cd vendor/libcdio
+          ./autogen.sh
+          make
+          sudo make install
+      - name: Build and install libcdio-paranoia from source
+        run: |
+          cd vendor/libcdio-paranoia
+          ./autogen.sh
+          make
+          sudo make install
+      - name: Build the crate
+        run: LIBCDIO_NO_VENDOR=1 cargo build --all-features
 
   semver-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Install libcdio
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libcdio-dev libiso9660-dev libudf-dev libcdio-cdda-dev libcdio-paranoia-dev
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+      # Will use a vendored build
       - name: Check semver
         uses: obi1kenobi/cargo-semver-checks-action@v2
