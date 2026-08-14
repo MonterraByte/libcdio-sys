@@ -127,7 +127,7 @@ fn make_bindings(
     // The homegrown boolean type is not recognized by bindgen.
     // This would result in different code gen for versions < 2.1.1 and versions >= 2.1.1.
     // To prevent this, we include stdbool.h ourselves, which suppresses the homegrown boolean type.
-    static CDIO_HEADERS: &str = r"
+    const CDIO_HEADERS: &str = r"
         #include <stdbool.h>
         #include <cdio/cdio.h>
         #include <cdio/cd_types.h>
@@ -135,7 +135,7 @@ fn make_bindings(
         #include <cdio/mmc_cmds.h>
         #include <cdio/utf8.h>
 ";
-    static HEADERS: &[&str] = &[
+    const HEADERS: &[&str] = &[
         CDIO_HEADERS,
         #[cfg(feature = "iso9660")]
         "#include <cdio/iso9660.h>",
