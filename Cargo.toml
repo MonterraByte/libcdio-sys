@@ -4,7 +4,7 @@ version = "3.0.0+2.4.0p2.0.2"
 edition = "2024"
 authors = ["Joaquim Monteiro <joaquim.monteiro@protonmail.com>"]
 description = "Native bindings to the libcdio (and libcdio-paranoia) library"
-repository = "https://github.com/MonterraByte/libcdio-sys"
+repository = "https://github.com/libcdio/libcdio-sys"
 readme = "README.md"
 exclude = [
   "/.github",
