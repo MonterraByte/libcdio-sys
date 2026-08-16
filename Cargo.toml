@@ -13,6 +13,9 @@ exclude = [
   "!vendor/libcdio/COPYING",
   "!vendor/libcdio/include/**/*.h",
   "!vendor/libcdio/lib/**/*.[ch]",
+  "vendor/libcdio-paranoia/*",
+  "!vendor/libcdio-paranoia/include/**/*.h",
+  "!vendor/libcdio-paranoia/lib/**/*.[ch]",
 ]
 keywords = ["ffi", "cd", "cdio", "iso9660", "udf"]
 categories = ["external-ffi-bindings", "hardware-support", "multimedia", "multimedia::audio"]
