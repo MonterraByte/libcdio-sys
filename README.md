@@ -1,11 +1,9 @@
 # libcdio-sys
-Native bindings to the libcdio and libcdio-paranoia libraries
+Native bindings to the [libcdio](https://github.com/libcdio/libcdio) and
+[libcdio-paranoia](https://github.com/libcdio/libcdio-paranoia) libraries.
 
 [![crates.io](https://img.shields.io/crates/v/libcdio-sys.svg)](https://crates.io/crates/libcdio-sys)
 [![Documentation](https://docs.rs/libcdio-sys/badge.svg)](https://docs.rs/libcdio-sys)
-
-[libcdio homepage](https://www.gnu.org/software/libcdio/)  
-[libcdio documentation](https://www.gnu.org/software/libcdio/libcdio.html)
 
 # Usage
 Run `cargo add libcdio-sys` to add the crate.
